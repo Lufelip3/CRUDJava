@@ -4,6 +4,8 @@
  */
 package Janelas;
 
+import BD.Conexao;
+
 /**
  *
  * @author luis.fmleite
@@ -15,6 +17,12 @@ public class CadastroProduto extends javax.swing.JFrame {
      */
     public CadastroProduto() {
         initComponents();
+        
+        if (Conexao.getConnection() !=null){
+            System.out.println("Conexção realizada");
+        }else{
+            System.out.println("Falha na conexão");
+        }
     }
 
     /**
