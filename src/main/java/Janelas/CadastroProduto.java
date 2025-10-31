@@ -5,6 +5,7 @@
 package Janelas;
 
 import BD.Conexao;
+import DAO.ProdutoDAO;
 import Model.ProdutoTableModel;
 import Objetos.Produto;
 
@@ -194,19 +195,39 @@ public class CadastroProduto extends javax.swing.JFrame {
 
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
         Produto p = new Produto();
+        ProdutoDAO dao = new ProdutoDAO();
+
         p.setDescricao(jTDescricao.getText());
-        p.setQuantidade(Integer.parseInt(jTQuantidade.getText().replace(",", ".")));
-        p.setValor(Double.valueOf(jTValor.getText()));
-        modelo.addLinha(p);
+        p.setQuantidade(Integer.parseInt(jTQuantidade.getText()));
+        p.setValor(Double.valueOf(jTValor.getText().replace(",", ".")));
+
+        dao.create(p);
+        modelo.recarregaTabela();
         limpaCampos();
 
     }//GEN-LAST:event_jBCadastrarActionPerformed
 
     private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirActionPerformed
         if (jTProdutos.getSelectedRow() != -1) {
-            modelo.removeLinha(jTProdutos.getSelectedRow());
+            Produto p = modelo.pegaDadosLinha(jTProdutos.getSelectedRow());
+            ProdutoDAO dao = new ProdutoDAO();
+            dao.delete(p);
+            modelo.recarregaTabela();
         }
     }//GEN-LAST:event_jBExcluirActionPerformed
+    private void jBAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAlterarActionPerformed
+        if (jTProdutos.getSelectedRow() != -1) {
+            modelo.setValueAt(jTDescricao.getText(), jTProdutos.getSelectedRow(), 0);
+            modelo.setValueAt(jTQuantidade.getText(), jTProdutos.getSelectedRow(), 1);
+            modelo.setValueAt(jTValor.getText(), jTProdutos.getSelectedRow(), 2);
+
+            Produto p = modelo.pegaDadosLinha(jTProdutos.getSelectedRow());
+            ProdutoDAO dao = new ProdutoDAO();
+            dao.updtae(p);
+            limpaCampos();
+            modelo.recarregaTabela();
+        }
+    }//GEN-LAST:event_jBAlterarActionPerformed
 
     private void jTProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTProdutosMouseClicked
         if (jTProdutos.getSelectedRow() != -1) {
