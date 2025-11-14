@@ -206,9 +206,10 @@ public class JanelaUsuario extends javax.swing.JFrame {
         UsuarioDAO dao = new UsuarioDAO();
 
         try {
+            String senhaDigitada = new String(jPSenha.getPassword());
+            u.setSenhaHash(senhaDigitada);
             u.setNome(jTNome.getText());
             u.setLogin(jTLogin.getText());
-            u.setSenhaHash(jPSenha.getPassword().toString());
             u.setTipo(jCTipo.getSelectedItem().toString());
             dao.create(u);
             modelo.recarregaTabela();

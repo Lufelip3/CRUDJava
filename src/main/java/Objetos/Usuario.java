@@ -102,8 +102,8 @@ public class Usuario {
     public void setSenhaHash(String senha) {
         this.senhaHash = encoder.encode(senha); //faz a criptografia
     }
-    
-    public boolean verificarSenha(String senhaDigitada){
+
+    public boolean verificarSenha(String senhaDigitada) {
         return encoder.matches(senhaDigitada, this.senha);
     }
     
